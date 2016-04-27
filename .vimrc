@@ -5,7 +5,6 @@ call plug#begin()
  
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'Valloric/ListToggle'
 Plug 'Valloric/YouCompleteMe'
 Plug 'cocopon/iceberg.vim'
 Plug 'miyakogi/seiya.vim'
@@ -23,11 +22,13 @@ set wrapmargin=0
 
 map <Space> <leader>
 
+" movement keys
 noremap j h
 noremap k j
 noremap l k
 noremap ; l
 
+" jump up or down
 noremap <C-k> <C-d>
 noremap <C-l> <C-u>
 
