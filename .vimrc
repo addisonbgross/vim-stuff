@@ -8,6 +8,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'Valloric/YouCompleteMe'
 Plug 'cocopon/iceberg.vim'
 Plug 'miyakogi/seiya.vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'joonty/vdebug'
 
 call plug#end()
 
@@ -27,6 +29,10 @@ noremap j h
 noremap k j
 noremap l k
 noremap ; l
+
+" Use ctrl-[j;] to select the active split!
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>l
 
 " jump up or down
 noremap <C-k> <C-d>
@@ -70,6 +76,7 @@ set magic
  
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
