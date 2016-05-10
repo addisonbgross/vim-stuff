@@ -10,15 +10,23 @@ Plug 'cocopon/iceberg.vim'
 Plug 'miyakogi/seiya.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'joonty/vdebug'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 call plug#end()
 
 """"""""""""""
 " Aesthetics "
 """"""""""""""
-let g:airline_theme='lucius'
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ 'component': {
+      \   'readonly': '%{&readonly?"⭤":""}',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+let g:Powerline_symbols='fancy'
+set noshowmode
 
 """""""""""""""""""""
 " Mobility and Keys "
