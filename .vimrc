@@ -10,6 +10,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'miyakogi/seiya.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'joonty/vdebug'
+Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 
 call plug#end()
@@ -19,8 +20,16 @@ call plug#end()
 """"""""""""""
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
+      \ 'active': {
+      \   'left': [['mode', 'paste'], ['fugitive', 'readonly', 'filename' ]]
+      \ },
       \ 'component': {
       \   'readonly': '%{&readonly?"⭤":""}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
       \ },
       \ 'separator': { 'left': '⮀', 'right': '⮂' },
       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
