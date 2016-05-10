@@ -10,14 +10,21 @@ Plug 'cocopon/iceberg.vim'
 Plug 'miyakogi/seiya.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'joonty/vdebug'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
+
+""""""""""""""
+" Aesthetics "
+""""""""""""""
+let g:airline_theme='lucius'
 
 """""""""""""""""""""
 " Mobility and Keys "
 """""""""""""""""""""
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set scrolloff=10
 set textwidth=0 
 set wrapmargin=0
@@ -30,9 +37,9 @@ noremap k j
 noremap l k
 noremap ; l
 
-" Use ctrl-[j;] to select the active split!
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>l
+" select the active split
+nnoremap <leader>j <C-w>h
+nnoremap <leader>; <C-w>l
 
 " jump up or down
 noremap <C-k> <C-d>
@@ -50,6 +57,7 @@ filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
+au CursorHold * checktime
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -117,10 +125,6 @@ set number
 " Be smart when using tabs ;)
 set smarttab
  
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
 " Useful mappings for managing tabs
 noremap <leader>tn :tabnew<cr>
 noremap <leader>to :tabonly<cr>
