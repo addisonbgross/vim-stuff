@@ -31,17 +31,15 @@ let g:lightline = {
       \   'readonly': '(&filetype!="help"&& &readonly)',
       \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
       \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-      \ }
+       \}
 let g:Powerline_symbols='fancy'
 set noshowmode
 
 """""""""""""""""""""
 " Mobility and Keys "
 """""""""""""""""""""
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set scrolloff=10
 set textwidth=0 
 set wrapmargin=0
@@ -171,7 +169,7 @@ function! HasPaste()
 endfunction
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " NERDTree "
 nmap <silent> <C-T> :NERDTreeToggle<CR>
