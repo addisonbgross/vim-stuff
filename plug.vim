@@ -1,4 +1,3 @@
-n manager
 " ============================
 "
 " Download plug.vim and put it in ~/.vim/autoload
