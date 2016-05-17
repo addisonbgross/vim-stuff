@@ -12,6 +12,7 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'joonty/vdebug'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
@@ -39,8 +40,8 @@ hi Normal ctermbg=none
 """""""""""""""""""""
 " Mobility and Keys "
 """""""""""""""""""""
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set scrolloff=10
 set textwidth=0 
 set wrapmargin=0
@@ -170,7 +171,7 @@ function! HasPaste()
 endfunction
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/.ycm_extra_conf.py'
 
 " NERDTree "
 nmap <silent> <C-T> :NERDTreeToggle<CR>
@@ -180,12 +181,16 @@ set cmdheight=1
 set laststatus=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ \ Column:\ %c
 
+" nice backgrounds
 let g:seiya_auto_enable=1
 
-" one.vim by AlexMax
+" faster vim refresh rate
+set updatetime=250
 
-" A theme based on the One Dark theme for Atom
-
+""""""""""""""""""""""""""""""""""""""""""""""""
+" one.vim by AlexMax                           "
+" A theme based on the One Dark theme for Atom "
+""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
 highlight clear
 if exists("syntax_on")
