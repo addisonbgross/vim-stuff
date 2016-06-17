@@ -7,6 +7,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Valloric/YouCompleteMe'
 Plug 'cocopon/iceberg.vim'
+Plug 'joshdick/onedark.vim'
 Plug 'miyakogi/seiya.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
@@ -115,7 +116,7 @@ set mat=2
 syntax enable
  
 set t_Co=256
-colorscheme iceberg 
+colorscheme onedark 
 
 
 " Set utf8 as standard encoding and en_US as the standard language
