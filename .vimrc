@@ -6,7 +6,7 @@ call plug#begin()
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Valloric/YouCompleteMe'
-Plug 'cocopon/iceberg.vim'
+Plug 'tikhomirov/vim-glsl'
 Plug 'joshdick/onedark.vim'
 Plug 'miyakogi/seiya.vim'
 Plug 'itchyny/lightline.vim'
