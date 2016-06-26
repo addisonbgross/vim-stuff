@@ -8,3 +8,5 @@ Put the ycm file in ~/
 do :PlugInstall
 
 profit
+
+Put onedark.vim in ~/.vim/autoload/lightline/colorscheme/

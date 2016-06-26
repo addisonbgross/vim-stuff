@@ -22,7 +22,7 @@ call plug#end()
 " Aesthetics "
 """"""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'seoul256',
+      \ 'colorscheme': 'onedark',
       \ 'active': {
       \   'left': [['mode', 'paste'], ['fugitive', 'readonly', 'filename' ]]
       \ },
