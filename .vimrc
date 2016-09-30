@@ -6,8 +6,13 @@ call plug#begin()
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Valloric/YouCompleteMe'
+Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'tikhomirov/vim-glsl'
 Plug 'joshdick/onedark.vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'evidens/vim-twig'
+Plug 'Yggdroot/indentLine'
+
 Plug 'miyakogi/seiya.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
@@ -178,7 +183,7 @@ endfunction
 """""""""""""""""""""""""""
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " NERDTree "
 nmap <silent> <C-T> :NERDTreeToggle<CR>
@@ -201,3 +206,15 @@ set clipboard=unnamed
 " vim-closetag "
 """"""""""""""""
 let g:closetag_filenames = "*.php,*.html,*.xhtml,*.phtml"
+
+" cpp highlighting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let c_no_curly_error = 1
+
+" txt highlighting
+let g:notes_suffix = '.txt'
+
+" Indents
+let g:indentLine_char = '┆'
+let g:indentLine_color_term = 239
