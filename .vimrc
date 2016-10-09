@@ -3,23 +3,30 @@
 """"""""""""
 call plug#begin()
  
+" interface
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'Valloric/YouCompleteMe'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'tikhomirov/vim-glsl'
-Plug 'joshdick/onedark.vim'
-Plug 'cocopon/iceberg.vim'
-Plug 'evidens/vim-twig'
-Plug 'Yggdroot/indentLine'
-
 Plug 'miyakogi/seiya.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'Valloric/YouCompleteMe'
+Plug 'Yggdroot/indentLine'
+
+" controls
 Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'alvan/vim-closetag'
+
+" languages
+Plug 'tikhomirov/vim-glsl'
+Plug 'evidens/vim-twig'
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" themes
+Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
+Plug 'cocopon/iceberg.vim'
 
 call plug#end()
 
@@ -27,7 +34,7 @@ call plug#end()
 " Aesthetics "
 """"""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'onelight',
       \ 'active': {
       \   'left': [['mode', 'paste'], ['fugitive', 'readonly', 'filename' ]]
       \ },
@@ -120,9 +127,9 @@ set mat=2
 " Enable syntax highlighting
 syntax enable
  
+" The theme
 set t_Co=256
-colorscheme onedark 
-
+colorscheme one 
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -131,6 +138,11 @@ set encoding=utf8
 set ffs=unix,dos,mac
 
 set nowrap
+
+" tab theme
+:hi TabLineFill ctermbg=100 
+:hi TabLine ctermfg=237 ctermbg=247
+:hi TabLineSel ctermfg=237 ctermbg=231
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -217,4 +229,4 @@ let g:notes_suffix = '.txt'
 
 " Indents
 let g:indentLine_char = '┆'
-let g:indentLine_color_term = 239
+let g:indentLine_color_term = 252 ""239
