@@ -12,6 +12,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'Valloric/YouCompleteMe'
 Plug 'Yggdroot/indentLine'
 
+" management
+Plug 'editorconfig/editorconfig-vim'
+
 " controls
 Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
@@ -19,14 +22,17 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'alvan/vim-closetag'
 
 " languages
+Plug 'pangloss/vim-javascript'
 Plug 'tikhomirov/vim-glsl'
 Plug 'evidens/vim-twig'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'jwalton512/vim-blade'
 
 " themes
 Plug 'joshdick/onedark.vim'
 Plug 'rakr/vim-one'
 Plug 'cocopon/iceberg.vim'
+Plug 'freeo/vim-kalisi'
 
 call plug#end()
 
@@ -34,7 +40,7 @@ call plug#end()
 " Aesthetics "
 """"""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'onelight',
+      \ 'colorscheme': 'onedark', 
       \ 'active': {
       \   'left': [['mode', 'paste'], ['fugitive', 'readonly', 'filename' ]]
       \ },
@@ -47,9 +53,10 @@ let g:lightline = {
       \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
       \ }
       \ }
+
 let g:Powerline_symbols='fancy'
 set noshowmode
-hi Normal ctermbg=none
+hi Normal ctermbg=None
 
 """""""""""""""""""""
 " Mobility and Keys "
@@ -77,6 +84,10 @@ nnoremap <leader>; <C-w>l
 " jump up or down
 noremap <C-k> <C-d>
 noremap <C-l> <C-u>
+
+" move between vertical panes
+noremap <C-w>l <C-w>k
+noremap <C-w>k <C-w>j
 
 " mouse action
 set mouse=a
@@ -128,8 +139,8 @@ set mat=2
 syntax enable
  
 " The theme
+colorscheme onedark
 set t_Co=256
-colorscheme one 
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -138,11 +149,6 @@ set encoding=utf8
 set ffs=unix,dos,mac
 
 set nowrap
-
-" tab theme
-:hi TabLineFill ctermbg=100 
-:hi TabLine ctermfg=237 ctermbg=247
-:hi TabLineSel ctermfg=237 ctermbg=231
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -155,7 +161,6 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " the old line numbers
 set number
 
@@ -166,9 +171,8 @@ set autoindent
 noremap <leader>tn :tabnew<cr>
 noremap <leader>to :tabonly<cr>
 noremap <leader>tc :tabclose<cr>
-noremap <leader>tm :tabmove
-noremap <leader>l :tabn<cr>
-noremap <leader>k :tabp<cr>
+noremap <leader>l :tabnext<cr>
+noremap <leader>k :tabprev<cr>
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -193,7 +197,6 @@ endfunction
 """""""""""""""""""""""""""
 " => Misc 
 """""""""""""""""""""""""""
-
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
@@ -207,9 +210,10 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 
 " nice backgrounds
 let g:seiya_auto_enable=1
+"set background=dark
 
 " faster vim refresh rate
-set updatetime=250
+set updatetime=25
 
 " get that copy/pasta
 set clipboard=unnamed
@@ -217,7 +221,7 @@ set clipboard=unnamed
 """"""""""""""""
 " vim-closetag "
 """"""""""""""""
-let g:closetag_filenames = "*.php,*.html,*.xhtml,*.phtml"
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 
 " cpp highlighting
 let g:cpp_class_scope_highlight = 1
@@ -229,4 +233,10 @@ let g:notes_suffix = '.txt'
 
 " Indents
 let g:indentLine_char = '┆'
-let g:indentLine_color_term = 252 ""239
+let g:indentLine_color_term = 239
+
+" snips
+imap <c-\> <Plug>snipMateTrigger
+
+" ternjs
+let g:javascript_plugin_jsdoc = 1
