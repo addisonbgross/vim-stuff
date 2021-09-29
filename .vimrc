@@ -9,30 +9,42 @@ Plug 'scrooloose/nerdtree'
 Plug 'miyakogi/seiya.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'Valloric/YouCompleteMe'
+Plug 'chrisbra/Colorizer'
 Plug 'Yggdroot/indentLine'
+
+" autocomplete
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 
 " management
 Plug 'editorconfig/editorconfig-vim'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'neomake/neomake'
 
 " controls
-Plug 'terryma/vim-multiple-cursors'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'alvan/vim-closetag'
 
 " languages
-Plug 'pangloss/vim-javascript'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'buoto/gotests-vim'
 Plug 'tikhomirov/vim-glsl'
-Plug 'evidens/vim-twig'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'jwalton512/vim-blade'
+Plug 'jparise/vim-graphql'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+
+" Hashicorp
+Plug 'hashivim/vim-nomadproject'
+Plug 'hashivim/vim-consul'
+Plug 'hashivim/vim-terraform'
 
 " themes
 Plug 'joshdick/onedark.vim'
-Plug 'rakr/vim-one'
 Plug 'cocopon/iceberg.vim'
-Plug 'freeo/vim-kalisi'
+Plug 'rakr/vim-one'
 
 call plug#end()
 
@@ -40,7 +52,7 @@ call plug#end()
 " Aesthetics "
 """"""""""""""
 let g:lightline = {
-      \ 'colorscheme': 'onedark', 
+      \ 'colorscheme': 'one', 
       \ 'active': {
       \   'left': [['mode', 'paste'], ['fugitive', 'readonly', 'filename' ]]
       \ },
@@ -57,6 +69,7 @@ let g:lightline = {
 let g:Powerline_symbols='fancy'
 set noshowmode
 hi Normal ctermbg=None
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 """""""""""""""""""""
 " Mobility and Keys "
@@ -68,8 +81,14 @@ set scrolloff=10
 set textwidth=0 
 set wrapmargin=0
 
+" Don't add a newline at EOF on save
+set nofixendofline
+
 " leader key space!
 map <Space> <leader>
+
+" go to file extensions
+set suffixesadd=.js,.jsx
 
 " movement keys
 noremap j h
@@ -97,11 +116,17 @@ set completeopt-=preview
 
 " Enable filetype plugins
 filetype plugin on
-filetype indent on
 
 " Set to auto read when a file is changed from the outside
 set autoread
 au CursorHold * checktime
+
+" Enable highlighting of line number
+hi clear CursorLine
+augroup CLClear
+    autocmd! ColorScheme * hi clear CursorLine
+augroup END
+set cursorline 
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -136,19 +161,25 @@ set mat=2
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable
- 
-" The theme
-colorscheme onedark
+syntax on
+
+" true colors
+if (has("termguicolors"))
+  set termguicolors
+  "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+" nice backgrounds
+let g:seiya_auto_enable=1
+
+" one dark
+let g:onedark_terminal_italics=1
+
+" Current Theme
+set background=dark
 set t_Co=256
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
- 
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
-set nowrap
+colorscheme one
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -157,6 +188,13 @@ set nowrap
 set nobackup
 set nowb
 set noswapfile
+set nowrap
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+ 
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -174,9 +212,15 @@ noremap <leader>tc :tabclose<cr>
 noremap <leader>l :tabnext<cr>
 noremap <leader>k :tabprev<cr>
 
+" spell checking
+noremap <leader>z :setlocal spell! spelllang=en_us<CR>
+
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
+" show full file name
+set statusline+=%F
+
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -197,20 +241,34 @@ endfunction
 """""""""""""""""""""""""""
 " => Misc 
 """""""""""""""""""""""""""
-" YouCompleteMe
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-
 " NERDTree "
-nmap <silent> <C-T> :NERDTreeToggle<CR>
+nmap <C-T> :NERDTreeToggle<CR>
+noremap <C-U> :NERDTreeFind<CR>
 let NERDTreeQuitOnOpen = 1 
+let g:NERDTreeWinSize=50
+
+" Golang
+let g:go_def_mapping_enabled = 0
+let g:go_fmt_autosave = 1
+let g:go_metalinter_autosave = 1
+let g:go_highlight_structs = 1 
+let g:go_highlight_methods = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_types = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_variable_declarations = 1
+autocmd Filetype go nmap <C-]> <Plug>(go-def-tab)
+autocmd Filetype go nmap <C-\> :GoDefPop<CR>
+autocmd Filetype go nmap <leader>f :GoFillStruct<CR>
 
 set cmdheight=1
 set laststatus=2
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ \ Column:\ %c
-
-" nice backgrounds
-let g:seiya_auto_enable=1
-"set background=dark
 
 " faster vim refresh rate
 set updatetime=25
@@ -228,15 +286,39 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let c_no_curly_error = 1
 
-" txt highlighting
-let g:notes_suffix = '.txt'
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
 
-" Indents
-let g:indentLine_char = '┆'
-let g:indentLine_color_term = 239
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-" snips
-imap <c-\> <Plug>snipMateTrigger
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+  let g:ctrlp_max_files = 0
+  let g:ctrlp_max_depth = 100
+endif
 
-" ternjs
-let g:javascript_plugin_jsdoc = 1
+" Prettier
+let g:prettier#exec_cmd_async = 1
+let g:prettier#quickfix_auto_focus = 0
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+
+" indent
+let g:indentLine_char = '¦'
+let g:indentLine_first_char = '¦'
+let g:indentLine_showFirstIndentLevel = 1
+autocmd Filetype json let g:indentLine_setConceal = 0
+set list lcs=tab:\|\ 
+
+" Coc
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Terraform
+let g:terraform_fmt_on_save = 1
+let g:terraform_align = 1
