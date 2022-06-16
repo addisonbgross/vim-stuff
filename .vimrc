@@ -2,18 +2,28 @@
 " vim-plug "
 """"""""""""
 call plug#begin()
- 
+
 " interface
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+
+" File tree
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
+" Telescope (need to install ripgrep: rg)
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 Plug 'miyakogi/seiya.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'chrisbra/Colorizer'
-Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': 'yarn install --frozen-lockfile'}
+Plug 'Shougo/deoplete.nvim'
 Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 Plug 'mdempsky/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 
@@ -24,7 +34,6 @@ Plug 'neomake/neomake'
 
 " controls
 Plug 'jiangmiao/auto-pairs'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'alvan/vim-closetag'
 
 " languages
@@ -42,31 +51,21 @@ Plug 'hashivim/vim-consul'
 Plug 'hashivim/vim-terraform'
 
 " themes
-Plug 'joshdick/onedark.vim'
-Plug 'cocopon/iceberg.vim'
 Plug 'rakr/vim-one'
 
 call plug#end()
 
+" Enable filetype plugins
+filetype plugin on
+
 """"""""""""""
 " Aesthetics "
 """"""""""""""
-let g:lightline = {
-      \ 'colorscheme': 'one', 
-      \ 'active': {
-      \   'left': [['mode', 'paste'], ['fugitive', 'readonly', 'filename' ]]
-      \ },
-      \ 'component': {
-      \   'readonly': '%{&readonly?"⭤":""}',
-      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-      \ },
-      \ 'component_visible_condition': {
-      \   'readonly': '(&filetype!="help"&& &readonly)',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-      \ }
-      \ }
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#show_splits = 0
 
-let g:Powerline_symbols='fancy'
 set noshowmode
 hi Normal ctermbg=None
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -112,10 +111,8 @@ noremap <C-w>k <C-w>j
 set mouse=a
 
 " turn off that scratch shit
-set completeopt-=preview
-
-" Enable filetype plugins
-filetype plugin on
+"set completeopt-=preview
+set completeopt=menu,menuone,noselect
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -241,16 +238,21 @@ endfunction
 """""""""""""""""""""""""""
 " => Misc 
 """""""""""""""""""""""""""
-" NERDTree "
-nmap <C-T> :NERDTreeToggle<CR>
-noremap <C-U> :NERDTreeFind<CR>
-let NERDTreeQuitOnOpen = 1 
-let g:NERDTreeWinSize=50
+
+" Telescope
+nnoremap <leader>f <cmd>Telescope find_files<cr>
+nnoremap <leader>g <cmd>Telescope live_grep<cr>
+
+" nvim tree
+nnoremap <C-t> :NvimTreeToggle<CR>
+nnoremap <C-f> :NvimTreeFindFile<CR>
 
 " Golang
 let g:go_def_mapping_enabled = 0
 let g:go_fmt_autosave = 1
 let g:go_metalinter_autosave = 1
+let g:go_fmt_command="gopls"
+let g:go_jump_to_error = 0
 let g:go_highlight_structs = 1 
 let g:go_highlight_methods = 1
 let g:go_highlight_functions = 1
@@ -262,9 +264,9 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_format_strings = 1
 let g:go_highlight_variable_declarations = 1
+autocmd Filetype go nmap <C-c> :GoCallers<CR>
 autocmd Filetype go nmap <C-]> <Plug>(go-def-tab)
 autocmd Filetype go nmap <C-\> :GoDefPop<CR>
-autocmd Filetype go nmap <leader>f :GoFillStruct<CR>
 
 set cmdheight=1
 set laststatus=2
@@ -286,38 +288,18 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 1
 let c_no_curly_error = 1
 
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-  let g:ctrlp_max_files = 0
-  let g:ctrlp_max_depth = 100
-endif
-
 " Prettier
 let g:prettier#exec_cmd_async = 1
 let g:prettier#quickfix_auto_focus = 0
 let g:prettier#autoformat = 1
 let g:prettier#autoformat_require_pragma = 0
 
-" indent
-let g:indentLine_char = '¦'
-let g:indentLine_first_char = '¦'
-let g:indentLine_showFirstIndentLevel = 1
-autocmd Filetype json let g:indentLine_setConceal = 0
-set list lcs=tab:\|\ 
-
 " Coc
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+autocmd Filetype javascript nmap <silent> <C-]> :call CocAction('jumpDefinition', 'tabe')<CR>
+" <C-o> to go back after definition
+autocmd Filetype javascript nmap <silent> gy <Plug>(coc-type-definition)
+autocmd Filetype javascript nmap <silent> gi <Plug>(coc-implementation)
+autocmd Filetype javascript nmap <silent> gr <Plug>(coc-references)
 
 " Terraform
 let g:terraform_fmt_on_save = 1

@@ -1,12 +1,8 @@
-# vim-stuff
-My vim stuff
+# vim stuff
 
-Put the plug.vim in ~/.vim/autoload
-
-Put the ycm file in ~/
-
-do :PlugInstall
-
-profit
-
-Put onedark.vim in ~/.vim/autoload/lightline/colorscheme/
+- put plug.vim in ~/.vim/autoload
+- put onedark.vim in ~/.vim/autoload/lightline/colorscheme/
+- put init.vim in ~/.config/nvim
+- put coc-settings.json in ~/.config/nvim
+- do :PlugInstall
+- win
