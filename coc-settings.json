@@ -1,6 +1,6 @@
 {
   "languageserver": {
-   "golang": {
+    "golang": {
       "command": "/usr/local/go/bin/bin/gopls",
       "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
       "filetypes": ["go"],
@@ -8,5 +8,29 @@
         "usePlaceholders": true
       }
     }
+  },
+  "suggest.completionItemKindLabels": {
+    "variable": "\uf71b",
+    "constant": "\uf8ff",
+    "struct": "\ufb44",
+    "class": "\uf0e8",
+    "interface": "\ufa52",
+    "text": "\ue612",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "color": "\ue22b",
+    "property": "\ufab6",
+    "field": "\uf93d",
+    "unit": "\uf475",
+    "file": "\uf471",
+    "value": "\uf8a3",
+    "event": "\ufacd",
+    "folder": "\uf115",
+    "keyword": "\uf893",
+    "snippet": "\uf64d",
+    "operator": "\uf915",
+    "reference": "\uf87a",
+    "typeParameter": "\uf278",
+    "default": "\uf29c"
   }
 }

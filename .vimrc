@@ -36,14 +36,13 @@ Plug 'neomake/neomake'
 Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
 
+" syntax
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'windwp/nvim-autopairs'
+
 " languages
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'buoto/gotests-vim'
-Plug 'tikhomirov/vim-glsl'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'jparise/vim-graphql'
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
 
 " Hashicorp
 Plug 'hashivim/vim-nomadproject'
@@ -52,6 +51,7 @@ Plug 'hashivim/vim-terraform'
 
 " themes
 Plug 'rakr/vim-one'
+Plug 'navarasu/onedark.nvim'
 
 call plug#end()
 
@@ -163,20 +163,20 @@ syntax on
 " true colors
 if (has("termguicolors"))
   set termguicolors
-  "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
 " nice backgrounds
 let g:seiya_auto_enable=1
 
-" one dark
-let g:onedark_terminal_italics=1
+" edge theme
+let g:edge_style = 'aura'
+let g:edge_better_performance = 1
+let g:edge_enable_italic = 1
 
 " Current Theme
 set background=dark
 set t_Co=256
-colorscheme one
+colorscheme onedark
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -208,6 +208,7 @@ noremap <leader>to :tabonly<cr>
 noremap <leader>tc :tabclose<cr>
 noremap <leader>l :tabnext<cr>
 noremap <leader>k :tabprev<cr>
+noremap <leader>t :bufdo tab split<CR>:tablast<CR>:tabclose<CR>:syntax on<CR>
 
 " spell checking
 noremap <leader>z :setlocal spell! spelllang=en_us<CR>
@@ -282,11 +283,6 @@ set clipboard=unnamed
 " vim-closetag "
 """"""""""""""""
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
-
-" cpp highlighting
-let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
-let c_no_curly_error = 1
 
 " Prettier
 let g:prettier#exec_cmd_async = 1
