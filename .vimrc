@@ -16,7 +16,6 @@ Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'miyakogi/seiya.vim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'chrisbra/Colorizer'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -50,8 +49,8 @@ Plug 'hashivim/vim-consul'
 Plug 'hashivim/vim-terraform'
 
 " themes
-Plug 'rakr/vim-one'
 Plug 'navarasu/onedark.nvim'
+Plug 'rakr/vim-one'
 
 call plug#end()
 
@@ -176,7 +175,13 @@ let g:edge_enable_italic = 1
 " Current Theme
 set background=dark
 set t_Co=256
-colorscheme onedark
+
+if has('nvim')
+  colorscheme onedark
+endif
+if !has('nvim')
+  colorscheme one
+endif 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -295,7 +300,7 @@ autocmd Filetype javascript nmap <silent> <C-]> :call CocAction('jumpDefinition'
 " <C-o> to go back after definition
 autocmd Filetype javascript nmap <silent> gy <Plug>(coc-type-definition)
 autocmd Filetype javascript nmap <silent> gi <Plug>(coc-implementation)
-autocmd Filetype javascript nmap <silent> gr <Plug>(coc-references)
+autocmd Filetype javascript nmap <silent> <C-\> <Plug>(coc-references)
 
 " Terraform
 let g:terraform_fmt_on_save = 1
